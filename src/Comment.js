@@ -16,7 +16,10 @@ class Comment extends Component  {
   }
   componentWillMount() {
     this._updataTimeString()
-    const timer = setInterval(this._updataTimeString.bind(this), 5000)
+    this._timer = setInterval(this._updataTimeString.bind(this), 5000)
+  }
+  componentWillUnmount() {
+    clearInterval(this._timer)
   }
   _updataTimeString() {
     const comment = this.props.comment
@@ -27,6 +30,7 @@ class Comment extends Component  {
                   : Math.round(Math.max(duration, 1)) + '秒钟前'
     })
   }
+  
   handleDeleteComment() {
     if(this.props.onDeleteComment) {
       this.props.onDeleteComment(this.props.index)
@@ -42,7 +46,7 @@ class Comment extends Component  {
 				<span className="comment-createdtime">
 				  {this.state.timeString}
 				</span>
-				<span className="comment-delete">
+				<span className="comment-delete" onClick={this.handleDeleteComment.bind(this)}>
 				  删除
 				</span>
 			</div>

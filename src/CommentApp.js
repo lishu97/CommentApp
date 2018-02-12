@@ -30,11 +30,13 @@ class CommentApp extends Component  {
 	  const comments = this.state.comments
 	  comments.push(comment)
 	  this.setState({comments})
-	  console.log(comments)
 	  this._saveComments(comments)
 	}
 	handleDeleteComment(index) {
-	  
+	  const comments = this.state.comments
+	  comments.splice(index, 1)
+	  this.setState({comments})
+	  this._saveComments(comments)
 	}
 	render() {
 		return (

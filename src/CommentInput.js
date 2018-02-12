@@ -1,14 +1,10 @@
 import React, {Component} from 'react'
-import Comment from './Comment'
 import PropTypes from 'prop-types'
 
 class CommentInput extends Component {
   static propTypes = {
     onSubmit:PropTypes.func,
     onDeleteComment: PropTypes.func
-  }
-  static defaultProps = {
-    comments: []
   }
 	constructor() {
 		super()
@@ -51,14 +47,9 @@ class CommentInput extends Component {
     }
     this.setState({content: ''})
   }
-  handleDeleteComment(index) {
-    if(this.props.onDeleteComment) {
-      this.props.onDeleteComment(index)
-    }
-  }
 	render() {
 		return (
-			/*<div className="comment-input">
+			<div className="comment-input">
 				<div className="comment-field">
 					<span className="comment-field-name">用户名：</span>
 					<div className="comment-field-input">
@@ -82,15 +73,6 @@ class CommentInput extends Component {
 				<div className="comment-field-button">
 					<button onClick={this.handleSubmit.bind(this)}>发布</button>
 				</div>
-			</div>*/
-			<div>
-			  {this.props.comments.map((comment, i) => 
-			    <Comment
-			      comment={comment}
-			      key={i}
-			      index={i}
-			      onDelete={this.handleDeleteComment.bind(this)} />			      
-			  )}
 			</div>
 		)
 		
