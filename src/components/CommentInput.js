@@ -3,39 +3,35 @@ import PropTypes from 'prop-types'
 
 class CommentInput extends Component {
   static propTypes = {
-    onSubmit:PropTypes.func,
+    username: PropTypes.any,
+    onSubmit: PropTypes.func,
     onDeleteComment: PropTypes.func
   }
-	constructor() {
-		super()
+  static defaultProps = {
+    username: ''
+  }
+	constructor(props) {
+		super(props)
 		this.state = {
-			username: '',
+			username: props.username,
 			content: ''
 		}
 	}
-	componentWillMount() {
-    this._loadUsername()
+	componentDidMount () {
+    this.textarea.focus()
   }
-	componentDidMount() {
-    this.commentInput.focus()
-  }  
-  _saveUsername(username) {
-    localStorage.setItem('username', username)
-  }
-  _loadUsername() {
-    const username = localStorage.getItem('username')
-    if(username) {
-      this.setState({username})
-    }
-  }
-	handleUsernameChange(event) {
+  handleUsernameChange(event) {
 		this.setState({username: event.target.value})
 	}
-	handleUsernameBlur(event) {
-    this._saveUsername(event.target.value)
-  }
   handleContentChange(event) {
-    this.setState({content: event.target.value})
+    this.setState({
+      content: event.target.value
+    })
+  }
+  handleUsernameBlur (event) {
+    if (this.props.onUserNameInputBlur) {
+      this.props.onUserNameInputBlur(event.target.value)
+    }
   }
   handleSubmit(event) {
     if(this.props.onSubmit) {
@@ -66,7 +62,7 @@ class CommentInput extends Component {
 						<textarea 
 						  value={this.state.content}  
 						  onChange={this.handleContentChange.bind(this)} 
-						  ref={(commentInput) => this.commentInput = commentInput}  
+						  ref={(textarea) => this.textarea = textarea}  
 						/>
 					</div>
 				</div>
